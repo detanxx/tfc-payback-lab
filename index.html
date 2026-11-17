@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a1a57" />
+    <meta name="description" content="A simple Teen Finance Club experiment that shows what borrowing can really cost." />
+    <title>Payback Lab — What does borrowing really cost?</title>
+    <link rel="stylesheet" href="styles.css?v=20261116-2" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="https://teenfinanceclub.com" aria-label="Teen Finance Club home">
+        <img class="brand-mark" src="./tfc-logo.png" alt="" aria-hidden="true" />
+        <span class="brand-copy"><span class="brand-title-row"><strong>payback lab<span class="brand-period">.</span></strong><span class="beta-tag">BETA</span></span><small>See how your payment choices change what borrowing really costs.</small></span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation"><a href="#main-title" aria-current="page">Explore</a></nav>
+      <a class="workshop-link" href="https://teenfinanceclub.com/events"><span class="long-label">Join a Live Workshop</span><span class="short-label">Workshops</span></a>
+    </header>
+    <main>
+      <div class="topline"><span class="eyebrow">TFC MONEY EXPERIMENT</span><span class="cad-label">Canadian dollars · CAD</span></div>
+      <section class="intro" aria-labelledby="main-title">
+        <h1 id="main-title">What does borrowing <em>really</em> cost?</h1>
+        <p>Try a purchase, pick a way to pay it back, and see what changes.</p>
+      </section>
+
+      <nav class="steps" aria-label="Experiment steps">
+        <span class="step current" data-step-indicator="1"><b>1</b> Pick something</span><span class="step-line"></span>
+        <span class="step" data-step-indicator="2"><b>2</b> Choose a plan</span><span class="step-line"></span>
+        <span class="step" data-step-indicator="3"><b>3</b> See what happens</span>
+      </nav>
+
+      <section id="step-1" class="panel step-panel" aria-labelledby="purchase-title">
+        <div class="panel-heading"><span class="step-number">01</span><div><h2 id="purchase-title">What are you buying?</h2><p>Pick one to get started. No money details yet.</p></div></div>
+        <div class="purchase-grid" role="group" aria-label="Choose a purchase">
+          <button class="purchase-card" data-amount="300" data-name="sneakers"><span class="purchase-icon" aria-hidden="true">👟</span><span class="purchase-name">Sneakers</span><span class="purchase-price">$300</span></button>
+          <button class="purchase-card" data-amount="1000" data-name="laptop"><span class="purchase-icon" aria-hidden="true">💻</span><span class="purchase-name">Laptop</span><span class="purchase-price">$1,000</span></button>
+          <button class="purchase-card" data-amount="1500" data-name="phone"><span class="purchase-icon" aria-hidden="true">📱</span><span class="purchase-name">Phone</span><span class="purchase-price">$1,500</span></button>
+        </div>
+        <form id="custom-purchase" class="custom-purchase">
+          <label for="custom-amount">Or try your own amount</label>
+          <div class="custom-row"><div class="money-input"><span>$</span><input id="custom-amount" inputmode="decimal" type="number" min="100" max="5000" step="1" placeholder="Amount" aria-describedby="custom-hint" /></div><button class="button button-dark" type="submit">Use this amount <span aria-hidden="true">→</span></button></div>
+          <span id="custom-hint" class="field-hint">From $100 to $5,000</span>
+          <span id="purchase-error" class="error" role="alert"></span>
+        </form>
+      </section>
+
+      <section id="step-2" class="panel step-panel hidden" aria-labelledby="payment-title" tabindex="-1">
+        <button class="back-link" data-back="1">← Change purchase</button>
+        <div class="panel-heading"><span class="step-number">02</span><div><h2 id="payment-title">How will you pay it back?</h2><p id="purchase-summary"></p></div></div>
+        <div class="choice-list" role="radiogroup" aria-label="Choose how to repay">
+          <button class="choice-card selected" role="radio" aria-checked="true" data-strategy="minimum"><span class="choice-dot"></span><span><strong>Pay the smallest amount each month</strong><small>The minimum payment keeps you on track, but takes longer.</small></span><span class="choice-tag">SLOWER</span></button>
+          <button class="choice-card" role="radio" aria-checked="false" data-strategy="fixed"><span class="choice-dot"></span><span><strong>Pay the same amount each month</strong><small>Choose an amount to pay regularly until it's gone.</small></span><span class="choice-tag">YOUR PLAN</span></button>
+          <button class="choice-card" role="radio" aria-checked="false" data-strategy="full"><span class="choice-dot"></span><span><strong>Pay everything by the due date</strong><small>Pay the full balance on time and avoid interest in this example.</small></span><span class="choice-tag">NO INTEREST*</span></button>
+        </div>
+        <div id="fixed-options" class="fixed-options hidden">
+          <span class="field-label">How much each month?</span>
+          <div class="payment-presets" role="group" aria-label="Suggested monthly payments"><button data-payment="25">$25</button><button data-payment="50">$50</button><button data-payment="100">$100</button></div>
+          <label class="custom-payment" for="fixed-payment">Or enter an amount <span class="money-input"><span>$</span><input id="fixed-payment" type="number" min="10" max="1000" step="1" inputmode="decimal" /></span> / month</label>
+          <p id="minimum-hint" class="field-hint"></p><span id="payment-error" class="error" role="alert"></span>
+        </div>
+        <div class="note"><span aria-hidden="true">✳</span><p>A credit card lets you borrow money for now. Interest is extra money charged when you carry a balance. We’ll use a 20.99% yearly rate for this example.</p></div>
+        <button id="show-results" class="button button-coral button-wide">See what happens <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section id="step-3" class="results hidden" aria-labelledby="results-title" tabindex="-1">
+        <button class="back-link" data-back="2">← Change your payment plan</button>
+        <div class="results-title-row"><div><span class="eyebrow">YOUR RESULTS</span><h2 id="results-title">Here's what happens.</h2></div><button id="start-over" class="text-button">Start again ↺</button></div>
+        <div class="result-cards" aria-live="polite">
+          <article class="result-card result-highlight"><span class="result-icon" aria-hidden="true">＋</span><span class="result-label">Extra money you pay</span><strong id="result-interest">$0</strong><span class="result-caption">That’s interest</span></article>
+          <article class="result-card"><span class="result-icon" aria-hidden="true">＝</span><span class="result-label">What you pay altogether</span><strong id="result-total">$0</strong><span class="result-caption">Purchase + interest</span></article>
+          <article class="result-card"><span class="result-icon" aria-hidden="true">◷</span><span class="result-label">How long it takes</span><strong id="result-time">0 months</strong><span class="result-caption" id="result-time-caption">Until it’s paid off</span></article>
+        </div>
+        <p id="result-message" class="result-message"></p>
+        <section class="panel chart-panel" aria-labelledby="chart-heading">
+          <div class="chart-heading"><div><span class="eyebrow">YOUR BALANCE, MONTH BY MONTH</span><h3 id="chart-heading">What you still owe</h3><p>Interest is added each month. Your payment brings this line down.</p></div><div class="chart-legend"><span id="minimum-legend"><i class="legend-dot min"></i>Smallest payment</span><span><i class="legend-dot chosen"></i><span id="chosen-legend-text">Your plan</span></span></div></div>
+          <div class="chart-wrap"><svg id="balance-chart" viewBox="0 0 640 280" role="group" aria-labelledby="chart-svg-title chart-svg-desc"><title id="chart-svg-title">Money owed over time</title><desc id="chart-svg-desc"></desc></svg></div>
+          <p id="chart-summary" class="chart-summary" aria-live="polite"></p>
+          <p id="chart-point-detail" class="chart-point-detail" aria-live="polite">Tap or focus a point to see the amount still owed.</p>
+        </section>
+        <section class="panel experiment-panel" aria-labelledby="experiment-heading">
+          <div class="experiment-heading"><div><span class="eyebrow">TRY A DIFFERENT AMOUNT</span><h3 id="experiment-heading">What if you paid more?</h3><p>Move the slider and watch the results change.</p></div><span class="instant-pill"><i></i> UPDATES RIGHT AWAY</span></div>
+          <label class="slider-label" for="payment-slider"><span>Monthly payment</span><strong id="slider-value">$0</strong></label>
+          <input id="payment-slider" type="range" min="10" max="1000" step="1" value="100" aria-describedby="slider-help" />
+          <div class="slider-range"><span id="slider-min-label">Minimum</span><span id="slider-max-label">$1,000 / month</span></div>
+          <p id="slider-help" class="field-hint"></p>
+          <div id="live-feedback" class="live-feedback" aria-live="polite"></div>
+        </section>
+        <details class="details-panel"><summary>See month-by-month details</summary><div class="table-scroll"><table><thead><tr><th>Month</th><th>You paid</th><th>Interest added</th><th>Still owed</th></tr></thead><tbody id="month-rows"></tbody></table></div></details>
+        <details class="challenge-panel"><summary>Optional: Can you pay it off within 12 months?</summary><div class="challenge-content"><p>Try a monthly amount for the $1,000 laptop example at 20.99% yearly interest.</p><label for="challenge-payment">Monthly payment <span class="money-input"><span>$</span><input id="challenge-payment" type="number" min="10" max="1000" step="1" value="95" inputmode="decimal" /></span></label><p id="challenge-feedback" class="challenge-feedback" aria-live="polite"></p></div></details>
+        <p class="assumptions">*Paying in full avoids interest here if you have no older unpaid balance and the purchase qualifies for an interest-free grace period. Actual cards may calculate interest daily. Minimum payments here use an example rule: the greater of $10 or 3% of what’s owed after interest. Card rules vary.</p>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="footer-brand"><strong>Teen Finance Club</strong><p>Helping teenagers build practical money skills through interactive learning and real-world experiences.</p></div><div class="footer-lab"><strong>Payback Lab: What Does Borrowing Really Cost?</strong><p>Explore how credit card payments, interest, and time affect the real cost of borrowing.</p></div><div class="footer-disclaimer"><strong>Disclaimer</strong><p>This is an educational simulation using simplified assumptions. Actual credit card terms, interest calculations, and payment requirements may differ. It is not financial advice.</p></div></footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
