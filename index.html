@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#1a1a57" />
     <meta name="description" content="A simple Teen Finance Club experiment that shows what borrowing can really cost." />
     <title>Payback Lab — What does borrowing really cost?</title>
-    <link rel="stylesheet" href="styles.css?v=20261116-2" />
+    <link rel="stylesheet" href="styles.css?v=20261117-1" />
   </head>
   <body>
     <header class="site-header">
@@ -33,16 +33,44 @@
       <section id="step-1" class="panel step-panel" aria-labelledby="purchase-title">
         <div class="panel-heading"><span class="step-number">01</span><div><h2 id="purchase-title">What are you buying?</h2><p>Pick one to get started. No money details yet.</p></div></div>
         <div class="purchase-grid" role="group" aria-label="Choose a purchase">
-          <button class="purchase-card" data-amount="300" data-name="sneakers"><span class="purchase-icon" aria-hidden="true">👟</span><span class="purchase-name">Sneakers</span><span class="purchase-price">$300</span></button>
-          <button class="purchase-card" data-amount="1000" data-name="laptop"><span class="purchase-icon" aria-hidden="true">💻</span><span class="purchase-name">Laptop</span><span class="purchase-price">$1,000</span></button>
-          <button class="purchase-card" data-amount="1500" data-name="phone"><span class="purchase-icon" aria-hidden="true">📱</span><span class="purchase-name">Phone</span><span class="purchase-price">$1,500</span></button>
+          <button class="purchase-card purchase-recommended" data-amount="300" data-name="sneakers" aria-pressed="false">
+            <span class="purchase-badge">Recommended first try</span>
+            <span class="selection-indicator" aria-hidden="true"></span>
+            <span class="purchase-icon" aria-hidden="true">👟</span>
+            <span class="purchase-name">Sneakers</span>
+            <span class="purchase-desc">A familiar first example to try.</span>
+            <span class="purchase-price">$300</span>
+            <span class="purchase-action">Choose this <span aria-hidden="true">→</span></span>
+          </button>
+          <button class="purchase-card purchase-featured" data-amount="1000" data-name="laptop" aria-pressed="false">
+            <span class="purchase-badge purchase-badge-spacer" aria-hidden="true">Example</span>
+            <span class="selection-indicator" aria-hidden="true"></span>
+            <span class="purchase-icon" aria-hidden="true">💻</span>
+            <span class="purchase-name">Laptop</span>
+            <span class="purchase-desc">See how a bigger balance changes the cost.</span>
+            <span class="purchase-price">$1,000</span>
+            <span class="purchase-action">Choose this <span aria-hidden="true">→</span></span>
+          </button>
+          <button class="purchase-card purchase-own" data-amount="1500" data-name="phone" aria-pressed="false">
+            <span class="purchase-badge purchase-badge-spacer" aria-hidden="true">Example</span>
+            <span class="selection-indicator" aria-hidden="true"></span>
+            <span class="purchase-icon" aria-hidden="true">📱</span>
+            <span class="purchase-name">Phone</span>
+            <span class="purchase-desc">Explore a higher purchase amount.</span>
+            <span class="purchase-price">$1,500</span>
+            <span class="purchase-action">Choose this <span aria-hidden="true">→</span></span>
+          </button>
         </div>
-        <form id="custom-purchase" class="custom-purchase">
-          <label for="custom-amount">Or try your own amount</label>
-          <div class="custom-row"><div class="money-input"><span>$</span><input id="custom-amount" inputmode="decimal" type="number" min="100" max="5000" step="1" placeholder="Amount" aria-describedby="custom-hint" /></div><button class="button button-dark" type="submit">Use this amount <span aria-hidden="true">→</span></button></div>
+        <div id="custom-purchase" class="custom-purchase">
+          <label class="custom-heading" for="custom-amount"><span class="custom-selection-indicator" aria-hidden="true"></span><span>Or try your own amount</span></label>
+          <div class="custom-row"><div class="money-input"><span>$</span><input id="custom-amount" inputmode="decimal" type="number" min="100" max="5000" step="1" placeholder="Amount" aria-describedby="custom-hint purchase-error" /></div></div>
           <span id="custom-hint" class="field-hint">From $100 to $5,000</span>
           <span id="purchase-error" class="error" role="alert"></span>
-        </form>
+        </div>
+        <div class="purchase-continue">
+          <p id="purchase-selection-status" aria-live="polite">Choose an example above or enter your own amount.</p>
+          <button id="continue-to-payment" class="button button-dark" type="button" disabled>Continue to payment plan <span aria-hidden="true">→</span></button>
+        </div>
       </section>
 
       <section id="step-2" class="panel step-panel hidden" aria-labelledby="payment-title" tabindex="-1">
@@ -92,6 +120,6 @@
       </section>
     </main>
     <footer class="site-footer"><div class="footer-brand"><strong>Teen Finance Club</strong><p>Helping teenagers build practical money skills through interactive learning and real-world experiences.</p></div><div class="footer-lab"><strong>Payback Lab: What Does Borrowing Really Cost?</strong><p>Explore how credit card payments, interest, and time affect the real cost of borrowing.</p></div><div class="footer-disclaimer"><strong>Disclaimer</strong><p>This is an educational simulation using simplified assumptions. Actual credit card terms, interest calculations, and payment requirements may differ. It is not financial advice.</p></div></footer>
-    <script type="module" src="app.js"></script>
+    <script type="module" src="app.js?v=20261117-1"></script>
   </body>
 </html>
