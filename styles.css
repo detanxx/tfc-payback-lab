@@ -53,3 +53,70 @@ h1 em,.step-number{color:#b94735}
   .long-label{display:none}
   .short-label{display:inline}
 }
+
+
+/* Spacious example cards inspired by the TFC scenario selector. */
+.purchase-grid{gap:14px;align-items:stretch}
+.purchase-card{position:relative;align-items:flex-start;text-align:left;min-height:248px;padding:20px 18px 18px;border:2px solid var(--lavender-mist);border-radius:18px;background:#fff;color:var(--deep-navy);box-shadow:0 10px 24px #1a1a5708;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease}
+.purchase-card:hover{transform:translateY(-3px);border-color:var(--deep-navy);box-shadow:0 14px 28px #1a1a5712}
+.purchase-recommended{background:color-mix(in srgb,var(--linen) 45%,white);border-color:var(--deep-navy)}
+.purchase-featured{background:color-mix(in srgb,var(--vibrant-coral) 9%,white);border-color:var(--vibrant-coral)}
+.purchase-own{background:#fff;border-color:var(--lavender-mist)}
+.purchase-card.selected{border:3px solid var(--vibrant-coral);background:color-mix(in srgb,var(--vibrant-coral) 9%,white);padding:19px 17px 17px;box-shadow:0 10px 26px #f9735c20}
+.purchase-badge{display:inline-flex;align-items:center;min-height:27px;padding:4px 11px;border-radius:99px;background:color-mix(in srgb,var(--vibrant-coral) 14%,white);color:var(--deep-navy);font-size:11px;font-weight:800;letter-spacing:.15px}
+.purchase-badge-spacer{visibility:hidden}
+.purchase-icon{font-size:26px;line-height:1;margin:14px 0 12px}
+.purchase-name{font-family:Manrope,'DM Sans',sans-serif;font-size:20px;line-height:1.2;letter-spacing:-.3px;color:var(--deep-navy)}
+.purchase-desc{display:block;min-height:43px;margin-top:9px;color:#73738f;font-size:13px;line-height:1.45}
+.purchase-price{margin-top:6px;color:var(--deep-navy);font-family:Manrope,'DM Sans',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px}
+.purchase-action{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:15px;color:var(--deep-navy);font-size:13px;font-weight:800}
+.purchase-featured .purchase-action{color:var(--deep-navy)}
+.purchase-action span{font-size:17px;transition:transform .16s ease}
+.purchase-card:hover .purchase-action span{transform:translateX(3px)}
+.custom-purchase{margin-top:18px;padding:16px 17px;border:0;border-left:4px solid var(--aquamarine);border-radius:12px;background:color-mix(in srgb,var(--aquamarine) 9%,white)}
+.custom-purchase>label{font-size:14px;color:var(--deep-navy)}
+.custom-purchase .field-hint{font-size:12px}
+@media(max-width:600px){
+  .purchase-grid{grid-template-columns:1fr;gap:10px}
+  .purchase-card{min-height:0;padding:15px 16px;display:grid;grid-template-columns:38px 1fr auto;grid-template-areas:"badge badge badge" "icon name price" "desc desc desc" "action action action";column-gap:9px;align-items:center}
+  .purchase-card.selected{padding:14px 15px}
+  .purchase-badge{grid-area:badge;justify-self:start;margin-bottom:10px}
+  .purchase-icon{grid-area:icon;font-size:24px;margin:0}
+  .purchase-name{grid-area:name;font-size:18px}
+  .purchase-price{grid-area:price;margin:0;font-size:20px}
+  .purchase-desc{grid-area:desc;min-height:0;margin:7px 0 0 47px;font-size:12px}
+  .purchase-action{grid-area:action;padding-top:10px;margin:0 0 0 47px;font-size:12px}
+  .custom-purchase{padding:14px 12px}
+}
+
+
+/* Keep examples neutral until the learner chooses one. */
+.purchase-card,.purchase-recommended,.purchase-featured,.purchase-own{background:#fff;border-color:var(--lavender-mist)}
+.purchase-card:hover{border-color:var(--deep-navy)}
+.purchase-card.selected{background:color-mix(in srgb,var(--vibrant-coral) 9%,white);border:3px solid var(--vibrant-coral);padding:19px 17px 17px}
+.selection-indicator{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:23px;height:23px;border:2px solid #b8b8c8;border-radius:50%;background:#fff;color:var(--deep-navy)}
+.purchase-card.selected .selection-indicator{border-color:var(--vibrant-coral);background:var(--vibrant-coral)}
+.purchase-card.selected .selection-indicator::after{content:'✓';font-size:14px;font-weight:900;line-height:1}
+.purchase-action{color:var(--deep-navy)}
+.purchase-continue{display:grid;grid-template-columns:1fr minmax(220px,auto);align-items:center;gap:18px;margin-top:16px;padding-top:16px;border-top:1px solid var(--lavender-mist)}
+.purchase-continue p{margin:0;color:#62627d;font-size:13px;line-height:1.45}
+.purchase-continue .button{min-height:52px;padding:0 22px;font-size:14px}
+.purchase-continue .button:disabled{background:var(--linen);color:#77778b;cursor:not-allowed;filter:none;transform:none}
+.button-secondary{background:#fff;border:1px solid var(--deep-navy);color:var(--deep-navy)}
+.button-secondary:hover{background:var(--linen)}
+@media(max-width:600px){
+  .selection-indicator{top:14px;right:13px;width:21px;height:21px}
+  .purchase-continue{grid-template-columns:1fr;gap:10px}
+  .purchase-continue .button{width:100%}
+}
+
+/* Custom purchase uses the same selection treatment as the example cards. */
+.custom-purchase{border:2px solid transparent;transition:border-color .16s ease,background .16s ease,box-shadow .16s ease}
+.custom-purchase.selected{border-color:var(--vibrant-coral);border-left-width:4px;background:color-mix(in srgb,var(--vibrant-coral) 8%,white);box-shadow:0 8px 22px #f9735c18}
+.custom-heading{display:flex!important;align-items:center;gap:9px;margin-bottom:9px!important;color:var(--deep-navy)!important;font-size:14px!important}
+.custom-selection-indicator{display:inline-grid;place-items:center;width:20px;height:20px;flex:none;border:2px solid #b8b8c8;border-radius:50%;color:white;font-size:12px;line-height:1}
+.custom-purchase.selected .custom-selection-indicator{border-color:var(--vibrant-coral);background:var(--vibrant-coral)}
+.custom-purchase.selected .custom-selection-indicator::after{content:'✓';font-weight:900}
+.custom-row{max-width:280px}
+.custom-row .money-input{width:100%}
+.custom-row .money-input input{width:100%}

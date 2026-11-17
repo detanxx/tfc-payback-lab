@@ -11,6 +11,8 @@ const formatDuration = (months) => {
 const durationFor = (result) => result.paidOff ? formatDuration(result.months) : '600+ months';
 const state = { step: 1, amount: 0, item: '', strategy: 'minimum', payment: 100, baseline: null, current: null };
 const panels = { 1: $('#step-1'), 2: $('#step-2'), 3: $('#step-3') };
+const customPurchase = $('#custom-purchase');
+const customAmountInput = $('#custom-amount');
 
 function showStep(step) {
   state.step = step;
@@ -26,6 +28,12 @@ function showStep(step) {
 }
 
 function selectPurchase(amount, item) {
+  const isCustom = item === 'purchase';
+  customPurchase.classList.toggle('selected', isCustom);
+  if (!isCustom) {
+    customAmountInput.value = '';
+    customAmountInput.removeAttribute('aria-invalid');
+  }
   state.amount = Math.round(Number(amount) * 100) / 100;
   state.item = item || 'purchase';
   $('#purchase-summary').textContent = `You’re borrowing ${money(state.amount * 100)} for your ${state.item}.`;
@@ -34,21 +42,48 @@ function selectPurchase(amount, item) {
   fixedInput.min = Math.ceil(firstMinimum);
   fixedInput.value = Math.max(100, Math.ceil(firstMinimum));
   $('#minimum-hint').textContent = `The smallest first payment would be about ${money(firstMinimum * 100)}. Actual card rules vary.`;
-  document.querySelectorAll('.purchase-card').forEach((card) => card.classList.toggle('selected', Number(card.dataset.amount) === state.amount && card.dataset.name === item));
+  document.querySelectorAll('.purchase-card').forEach((card) => {
+    const selected = Number(card.dataset.amount) === state.amount && card.dataset.name === item;
+    card.classList.toggle('selected', selected);
+    card.setAttribute('aria-pressed', String(selected));
+  });
+  $('#purchase-selection-status').textContent = `Selected: ${item === 'purchase' ? 'your amount' : item} — ${money(state.amount * 100)}. You can change it anytime.`;
+  $('#continue-to-payment').disabled = false;
   $('#purchase-error').textContent = '';
-  showStep(2);
+  customAmountInput.removeAttribute('aria-invalid');
 }
 
 document.querySelectorAll('.purchase-card').forEach((card) => card.addEventListener('click', () => selectPurchase(card.dataset.amount, card.dataset.name)));
-$('#custom-purchase').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const value = Number($('#custom-amount').value);
-  if (!Number.isFinite(value) || value < 100 || value > 5000) {
-    $('#purchase-error').textContent = 'Enter an amount from $100 to $5,000.';
-    $('#custom-amount').focus();
+$('#continue-to-payment').addEventListener('click', () => {
+  if (state.amount > 0) showStep(2);
+});
+customAmountInput.addEventListener('input', () => {
+  const rawValue = customAmountInput.value;
+  const value = Number(rawValue);
+  const valid = rawValue !== '' && Number.isFinite(value) && value >= 100 && value <= 5000;
+  if (!valid) {
+    customPurchase.classList.add('selected');
+    document.querySelectorAll('.purchase-card').forEach((card) => {
+      card.classList.remove('selected');
+      card.setAttribute('aria-pressed', 'false');
+    });
+    state.amount = 0;
+    state.item = 'purchase';
+    $('#continue-to-payment').disabled = true;
+    $('#purchase-selection-status').textContent = 'Enter an amount from $100 to $5,000 to continue.';
+    $('#purchase-error').textContent = '';
+    customAmountInput.setAttribute('aria-invalid', 'true');
     return;
   }
   selectPurchase(value, 'purchase');
+});
+
+customAmountInput.addEventListener('blur', () => {
+  const rawValue = customAmountInput.value;
+  const value = Number(rawValue);
+  if (rawValue !== '' && (!Number.isFinite(value) || value < 100 || value > 5000)) {
+    $('#purchase-error').textContent = 'Enter an amount from $100 to $5,000.';
+  }
 });
 
 document.querySelectorAll('.choice-card').forEach((card) => card.addEventListener('click', () => {
@@ -204,8 +239,16 @@ $('#start-over').addEventListener('click', () => {
   state.amount = 0;
   state.item = '';
   state.strategy = 'minimum';
-  $('#custom-amount').value = '';
-  document.querySelectorAll('.purchase-card').forEach((card) => card.classList.remove('selected'));
+  customAmountInput.value = '';
+  customAmountInput.removeAttribute('aria-invalid');
+  customPurchase.classList.remove('selected');
+  $('#purchase-error').textContent = '';
+  $('#purchase-selection-status').textContent = 'Choose an example above or enter your own amount.';
+  $('#continue-to-payment').disabled = true;
+  document.querySelectorAll('.purchase-card').forEach((card) => {
+    card.classList.remove('selected');
+    card.setAttribute('aria-pressed', 'false');
+  });
   document.querySelectorAll('.choice-card').forEach((option) => {
     const selected = option.dataset.strategy === 'minimum';
     option.classList.toggle('selected', selected);
